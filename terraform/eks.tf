@@ -26,6 +26,11 @@ locals {
 # - a router
 #
 
+resource "aws_key_pair" "ec2_key" {
+  key_name   = "ec2_key_name"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZc/1x6RBIPCzqtwMrEap4EOx4NTa+QY5OrSLBCnzY3y2GTC+wWzfe949mpo5hsfUkueFTb6nDAdfteWcF5x6T0lWvBXHYF3OxqmdzrVur/kieuL3FYHDugznmU1KKhV+KwJIJTgE3nbKd1tN4fC2OeC1SbAyaeuOfpMUDl3lCHl+LGhnL1ZS4VvlOL+5/STcsr+xomc9CaM+Zc5E7hP+prp1lve82WDzzPAldakgjOPze/tTU1jOi7Tmas73Nbv2TKbc/u5xDc/a3w25BFe24hK2DdpvJzbkFtQ/POSpyIllWB/zQ3ZwTjDl/pdNiHAN4Oir3xU6vNNDvaCo/n3Vv despina@dhcp-96.int.consol.de"
+}
+
 resource "aws_vpc" "k8s_vpc" {
   cidr_block = "10.0.0.0/16"
 
