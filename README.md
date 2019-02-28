@@ -162,8 +162,18 @@ After quite some time (several minutes) of work your Kubernetes Cluster should b
 "region" with your preferred region identifier via command line parameter "--var 'region=<your-identifier>'". But
 You will need to also use that region further down this setup.
 
-### Connect to Kubernetes Cluster via kubectl
+###Make sure that the account where your cluster is created is the one configured in AWS CLI
 
+```
+aws sts get-caller-identity
+```
+If not the one configure the account again by giving the access key and the corresponding secret
+```
+aws configure
+```
+
+### Connect to Kubernetes Cluster via kubectl
+#### Method 1:
 After execution Terraform is able to put out a kubectl configuration to connect to the new cluster via the following
 command (still in the "terraform" directory):
 
@@ -182,19 +192,19 @@ You can use this config for kubectl by pointing environment variable "KUBECONFIG
 ```
 export KUBECONFIG=$KUBECONFIG:~/.kube/config-eks-on-aws
 ```
-
+#### Method 2:
+```
+aws eks update-kubeconfig --name k8s-hello
+```
 Then you can try if your kubectl can access the cluster. For example, to list the pods on the cluster:
 
 ```
-kubectl get pods --all-namespaces
+kubectl get svc
 ```
-
-After some time the output might be similar to this:
-
+You should be seeing something like: 
 ```
-NAMESPACE     NAME                       READY   STATUS    RESTARTS   AGE
-kube-system   coredns-7554568866-k78w7   0/1     Pending   0          5m
-kube-system   coredns-7554568866-vpl6d   0/1     Pending   0          5m
+NAME             TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+svc/kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   1m
 ```
 
 ### Register Kubernetes nodes
